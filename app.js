@@ -125,10 +125,11 @@ window.onload = function(){
                 var loc_id = datas.data[0].result_object.location_id;
                 var lon = datas.data[0].result_object.longitude;
                 var lat = datas.data[0].result_object.latitude;
+                console.log(lat,lon,nop,nor);
                 $.ajax({
                     async: true,
                     crossDomain: true,
-                    url: `https://tripadvisor1.p.rapidapi.com/hotels/list-by-latlng?lang=en_US&hotel_class=1%252C2%252C3&limit=30&adults=${nop}&amenities=beach%252Cbar_lounge%252Cairport_transportation&rooms=${nor}&child_rm_ages=7%252C10&currency=USD&checkin=${checkin}&checkout=${checkout}&zff=4%252C6&subcategory=hotel%252Cbb%252Cspecialty&nights=2&latitude=${lat}&longitude=${lon}`,
+                    url: `https://tripadvisor1.p.rapidapi.com/hotels/list?offset=0&currency=USD&limit=30&order=asc&lang=en_US&sort=recommended&location_id=${loc_id}&adults=${nop}&checkin=${checkin}&checkout=${checkout}&rooms=${nor}&nights=2`,
                     method: "GET",
                     headers: {
                     "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
