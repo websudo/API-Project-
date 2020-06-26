@@ -1,99 +1,26 @@
 window.onload = function(){
     
-    // btns.addEventListener('click', (e) => {
-    //     e.preventDefault();
-    //     var query = []
-    //     console.log(this.document.querySelector('#input').value);
-    //     search = this.document.querySelector('#input').value;
-    //     for(let i=0 ; i< search.length ;i++){
-    //         if(search[i] == ' '){
-    //             query += '%20';
-    //         }
-    //         else{
-    //             query += search[i];
-    //         }
-    //     }
-    //     console.log(query);
-    // });
-    // $.ajax({
-    //     async: true,
-	//     crossDomain: true,
-	//     url: "https://tripadvisor1.p.rapidapi.com/answers/list?limit=10&question_id=5283833",
-	//     method: "GET",
-	//     headers: {
-	// 	"x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
-	// 	"x-rapidapi-key": "8ab030f737mshc395b583794af0fp1786cdjsn2ea1758f4eb1"
-	//     },
-    //     success : function(data){
-    //         console.log(data);
-    //     }
-    // });
-
-
-
-
-
-    // For getting location ID
-
-    // btns.addEventListener('click', (e) => {
-    //     e.preventDefault();
-    //     var query = [];
-    //     console.log(this.document.querySelector('input').value);
-    //     search = this.document.querySelector('input').value;
-    //     for(let i=0 ; i< search.length ;i++){
-    //         if(search[i] == ' '){
-    //             query += '%20';
-    //         }
-    //         else{
-    //             query += search[i];
-    //         }
-    //     }
-    //     console.log(query);
-    //     $.ajax({
-    //         async: true,
-    //         crossDomain: true,
-    //         url: `https://tripadvisor1.p.rapidapi.com/locations/search?location_id=1&limit=30&sort=relevance&offset=0&lang=en_US&currency=USD&units=km&query=${query}`,
-    //         method: "GET",
-    //         headers: {
-    //         "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
-    //         "x-rapidapi-key": "8ab030f737mshc395b583794af0fp1786cdjsn2ea1758f4eb1"
-    //         },
-    //         success : function(datas){
-    //             var loc_id = datas.data[0].result_object.location_id
-    //         }
-    //     });
-    // });
-
-
-
-
-
-
-    // $.ajax({
-    //     async: true,
-	//     crossDomain: true,
-	//     url: `https://tripadvisor1.p.rapidapi.com/locations/search?location_id=1&limit=30&sort=relevance&offset=0&lang=en_US&currency=USD&units=km&query=${query}`,
-	//     method: "GET",
-	//     headers: {
-	// 	"x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
-	// 	"x-rapidapi-key": "8ab030f737mshc395b583794af0fp1786cdjsn2ea1758f4eb1"
-	//     },
-    //     success : function(data){
-    //         console.log(data);
-    //     }
-    // });
 
     //For Hotel Searching 
-    
+
+
+    var count = 0;
     const btns = this.document.querySelector('.Hotel-btn');
+
     btns.addEventListener('click', (e) => {
         e.preventDefault();
+        if(count != 0){
+            const myNode = document.getElementById("main");
+            while (myNode.firstChild) {
+                myNode.removeChild(myNode.lastChild);
+            }
+        }
+        count += 1;
         var query = [];
         var checkin = null;
         var checkout = null;
         var nop = 1;
         var nor = 1;
-        console.log(this.document.querySelector('.Hotel-input').value);
         search = this.document.querySelector('.Hotel-input').value;
         checkin = this.document.querySelector('#checkin-input').value;
         checkout = this.document.querySelector('#checkout-input').value;
@@ -125,18 +52,43 @@ window.onload = function(){
                 var loc_id = datas.data[0].result_object.location_id;
                 var lon = datas.data[0].result_object.longitude;
                 var lat = datas.data[0].result_object.latitude;
-                console.log(lat,lon,nop,nor);
+                console.log(lat,lon);
                 $.ajax({
                     async: true,
                     crossDomain: true,
-                    url: `https://tripadvisor1.p.rapidapi.com/hotels/list?offset=0&currency=USD&limit=30&order=asc&lang=en_US&sort=recommended&location_id=${loc_id}&adults=${nop}&checkin=${checkin}&checkout=${checkout}&rooms=${nor}&nights=2`,
+                    url: `https://tripadvisor1.p.rapidapi.com/hotels/list?offset=0&currency=USD&limit=10&order=asc&lang=en_US&sort=recommended&location_id=${loc_id}&adults=${nop}&checkin=${checkin}&checkout=${checkout}&rooms=${nor}&nights=2`,
                     method: "GET",
                     headers: {
                     "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
                     "x-rapidapi-key": "8ab030f737mshc395b583794af0fp1786cdjsn2ea1758f4eb1"
                     },
-                    success : function(data){
-                        console.log(data);
+                    success : function(Data){
+                        console.log(Data);
+                        for(let i=0 ; i< Data.data.length ; i++){
+                        let newdiv = document.createElement('div');
+                        newdiv.classList.add('card');
+                        newdiv.setAttribute('style','width: 12rem; display : inline-block;');
+                        let newspan = document.createElement('span');
+                        let newimg = document.createElement('img');
+                        newimg.classList.add('card-img-top');
+                        let newspanone = document.createElement('span');
+                        newspanone.classList.add('card-body');
+                        let newp = document.createElement('h5');
+                        newp.classList.add('card-title');
+                        newp.innerText = Data.data[i].name;
+                        if(Data.data[i].photo){
+                            newimg.setAttribute('src',Data.data[i].photo.images.small.url);
+                        }
+                        else{
+                            newimg.setAttribute('src',"https://matthewsenvironmentalsolutions.com/images/com_hikashop/upload/not-available.png");
+                        }
+
+                        document.querySelector('#main').appendChild(newdiv);
+                        newdiv.appendChild(newspan);
+                        newspan.appendChild(newimg);
+                        newdiv.appendChild(newspanone);
+                        newspanone.appendChild(newp);
+                        }
                     }
                 });
             }
@@ -144,11 +96,21 @@ window.onload = function(){
     });
     
 
+
+
     // For To Do Things searching
+    
 
     const btns1 = this.document.querySelector('.ttdo-btn');
     btns1.addEventListener('click', (e) => {
         e.preventDefault();
+        if(count != 0){
+            const myNode = document.getElementById("main");
+            while (myNode.firstChild) {
+                myNode.removeChild(myNode.lastChild);
+            }
+        }
+        count += 1;
         var query = []
         search = this.document.querySelector('.ttdo-input').value;
         for(let i=0 ; i< search.length ;i++){
@@ -178,24 +140,61 @@ window.onload = function(){
                 $.ajax({
                     async: true,
                     crossDomain: true,
-                    url: `https://tripadvisor1.p.rapidapi.com/attractions/list-by-latlng?lunit=km&currency=USD&limit=30&distance=5&lang=en_US&longitude=${lon}&latitude=${lat}`,
+                    url: `https://tripadvisor1.p.rapidapi.com/attractions/list-by-latlng?lunit=km&currency=USD&limit=10&distance=5&lang=en_US&longitude=${lon}&latitude=${lat}`,
                     method: "GET",
                     headers: {
                     "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
                     "x-rapidapi-key": "8ab030f737mshc395b583794af0fp1786cdjsn2ea1758f4eb1"
                     },
-                    success : function(data){
-                        console.log(data);
+                    success : function(Data){
+                        console.log(Data);
+                        for(let i=0 ; i< Data.data.length ; i++){
+                            let newdiv = document.createElement('div');
+                            newdiv.classList.add('card');
+                            newdiv.setAttribute('style','width: 12rem; display : inline-block;');
+                            let newspan = document.createElement('span');
+                            let newimg = document.createElement('img');
+                            newimg.classList.add('card-img-top');
+                            let newspanone = document.createElement('span');
+                            newspanone.classList.add('card-body');
+                            let newp = document.createElement('h5');
+                            newp.classList.add('card-title');
+                            newp.innerText = Data.data[i].name;
+                            if(Data.data[i].photo){
+                                newimg.setAttribute('src',Data.data[i].photo.images.small.url);
+                            }
+                            else{
+                                newimg.setAttribute('src',"https://matthewsenvironmentalsolutions.com/images/com_hikashop/upload/not-available.png");
+                            }
+                            document.querySelector('#main').appendChild(newdiv);
+                            newdiv.appendChild(newspan);
+                            newspan.appendChild(newimg);
+                            newdiv.appendChild(newspanone);
+                            newspanone.appendChild(newp);
+                            }
                     }
                 });
             }
         });
     });
 
+
+
+
+
     // For Restaurant searching
+
+
     const btns2 = this.document.querySelector('.rest-btn');
     btns2.addEventListener('click', (e) => {
         e.preventDefault();
+        if(count != 0){
+            const myNode = document.getElementById("main");
+            while (myNode.firstChild) {
+                myNode.removeChild(myNode.lastChild);
+            }
+        }
+        count += 1;
         var query = [];
         search = this.document.querySelector('.rest-input').value;
         for(let i=0 ; i< search.length ;i++){
@@ -225,14 +224,39 @@ window.onload = function(){
                 $.ajax({
                     async: true,
                     crossDomain: true,
-                    url: `https://tripadvisor1.p.rapidapi.com/restaurants/list-by-latlng?limit=30&currency=USD&distance=2&lunit=km&lang=en_US&latitude=${lat}&longitude=${lon}`,
+                    url: `https://tripadvisor1.p.rapidapi.com/restaurants/list-by-latlng?limit=10&currency=USD&distance=2&lunit=km&lang=en_US&latitude=${lat}&longitude=${lon}`,
                     method: "GET",
                     headers: {
                     "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
                     "x-rapidapi-key": "8ab030f737mshc395b583794af0fp1786cdjsn2ea1758f4eb1"
                     },
-                    success : function(data){
-                        console.log(data);
+                    success : function(Data){
+                        console.log(Data);
+                        for(let i=0 ; i< Data.data.length ; i++){
+                            let newdiv = document.createElement('div');
+                            newdiv.classList.add('card');
+                            newdiv.setAttribute('style','width: 12rem; display : inline-block;');
+                            let newspan = document.createElement('span');
+                            let newimg = document.createElement('img');
+                            newimg.classList.add('card-img-top');
+                            let newspanone = document.createElement('span');
+                            newspanone.classList.add('card-body');
+                            let newp = document.createElement('h5');
+                            newp.classList.add('card-title');
+                            newp.innerText = Data.data[i].name;
+                            if(Data.data[i].photo){
+                                newimg.setAttribute('src',Data.data[i].photo.images.small.url);
+                            }
+                            else{
+                                
+                                newimg.setAttribute('src',"https://matthewsenvironmentalsolutions.com/images/com_hikashop/upload/not-available.png");
+                            }
+                            document.querySelector('#main').appendChild(newdiv);
+                            newdiv.appendChild(newspan);
+                            newspan.appendChild(newimg);
+                            newdiv.appendChild(newspanone);
+                            newspanone.appendChild(newp);
+                            }
                     }
                 });
             }
