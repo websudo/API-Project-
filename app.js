@@ -91,7 +91,7 @@ window.onload = function(){
             method: "GET",
             headers: {
             "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
-            "x-rapidapi-key": "8ab030f737mshc395b583794af0fp1786cdjsn2ea1758f4eb1"
+            "x-rapidapi-key": "d7cba70ccemsh3f8772c38439081p192d7djsneb2afa10c4cc"
             },
             success : function(datas){
                 var loc_id = datas.data[0].result_object.location_id;
@@ -105,7 +105,7 @@ window.onload = function(){
                     method: "GET",
                     headers: {
                     "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
-                    "x-rapidapi-key": "8ab030f737mshc395b583794af0fp1786cdjsn2ea1758f4eb1"
+                    "x-rapidapi-key": "d7cba70ccemsh3f8772c38439081p192d7djsneb2afa10c4cc"
                     },
                     success : function(Data){
                         console.log(Data);
@@ -202,7 +202,7 @@ window.onload = function(){
             method: "GET",
             headers: {
             "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
-            "x-rapidapi-key": "8ab030f737mshc395b583794af0fp1786cdjsn2ea1758f4eb1"
+            "x-rapidapi-key": "d7cba70ccemsh3f8772c38439081p192d7djsneb2afa10c4cc"
             },
             success : function(datas){
                 var loc_id = datas.data[0].result_object.location_id;
@@ -216,7 +216,7 @@ window.onload = function(){
                     method: "GET",
                     headers: {
                     "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
-                    "x-rapidapi-key": "8ab030f737mshc395b583794af0fp1786cdjsn2ea1758f4eb1"
+                    "x-rapidapi-key": "d7cba70ccemsh3f8772c38439081p192d7djsneb2afa10c4cc"
                     },
                     success : function(Data){
                         console.log(Data);
@@ -317,7 +317,7 @@ window.onload = function(){
             method: "GET",
             headers: {
             "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
-            "x-rapidapi-key": "8ab030f737mshc395b583794af0fp1786cdjsn2ea1758f4eb1"
+            "x-rapidapi-key": "d7cba70ccemsh3f8772c38439081p192d7djsneb2afa10c4cc"
             },
             success : function(datas){
                 var loc_id = datas.data[0].result_object.location_id;
@@ -331,7 +331,7 @@ window.onload = function(){
                     method: "GET",
                     headers: {
                     "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
-                    "x-rapidapi-key": "8ab030f737mshc395b583794af0fp1786cdjsn2ea1758f4eb1"
+                    "x-rapidapi-key": "d7cba70ccemsh3f8772c38439081p192d7djsneb2afa10c4cc"
                     },
                     success : function(Data){
                         console.log(Data);
