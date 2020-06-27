@@ -262,6 +262,7 @@ window.onload = function(){
                             if(Data.data[i].name != null){
                             document.querySelector('.slideshow').setAttribute('style','display:none;');
                             document.querySelector('#main').appendChild(newdiv);
+                            document.querySelector('#main').classList.add('main-class');
                             newdiv.appendChild(newspan);
                             newspan.appendChild(newimg);
                             newdiv.appendChild(newspanone);
@@ -370,6 +371,7 @@ window.onload = function(){
                             if(Data.data[i].name != null){
                             document.querySelector('.slideshow').setAttribute('style','display:none;');
                             document.querySelector('#main').appendChild(newdiv);
+                            document.querySelector('#main').classList.add('main-class');
                             newdiv.appendChild(newspan);
                             newspan.appendChild(newimg);
                             newdiv.appendChild(newspanone);
