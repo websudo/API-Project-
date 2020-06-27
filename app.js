@@ -8,11 +8,13 @@ window.onload = function(){
     button.addEventListener('click',(e)=>{
         if(document.querySelector('.Hotels').getAttribute('style') == "display: none;"){
             document.querySelector('.Hotels').setAttribute('style',"display: initial;");
-            document.querySelector('.ThingsToDo').setAttribute('style',"display: none;")
-            document.querySelector('.Restaurants').setAttribute('style',"display: none;")
+            document.querySelector('.ThingsToDo').setAttribute('style',"display: none;");
+            document.querySelector('.Restaurants').setAttribute('style',"display: none;");
+            document.querySelector('.tagline').setAttribute('style','display: none;');
         }
         else{
             document.querySelector('.Hotels').setAttribute('style',"display: none;");
+            document.querySelector('.tagline').setAttribute('style','display: initial;');
         }
     });
 
@@ -22,9 +24,11 @@ window.onload = function(){
             document.querySelector('.ThingsToDo').setAttribute('style',"display: initial;")
             document.querySelector('.Hotels').setAttribute('style',"display: none;");
             document.querySelector('.Restaurants').setAttribute('style',"display: none;");
+            document.querySelector('.tagline').setAttribute('style','display: none;');
         }
         else{
             document.querySelector('.ThingsToDo').setAttribute('style',"display: none;");
+            document.querySelector('.tagline').setAttribute('style','display: initial;');
         }
     });
 
@@ -34,9 +38,11 @@ window.onload = function(){
             document.querySelector('.Restaurants').setAttribute('style',"display: initial;")
             document.querySelector('.ThingsToDo').setAttribute('style',"display: none;");
             document.querySelector('.Hotels').setAttribute('style',"display: none;");
+            document.querySelector('.tagline').setAttribute('style','display: none;');
         }
         else{
             document.querySelector('.Restaurants').setAttribute('style',"display: none;");
+            document.querySelector('.tagline').setAttribute('style','display: initial;');
         }
     });
 
@@ -81,7 +87,7 @@ window.onload = function(){
         $.ajax({
             async: true,
             crossDomain: true,
-            url: `https://tripadvisor1.p.rapidapi.com/locations/search?location_id=1&limit=30&sort=relevance&offset=0&lang=en_US&currency=USD&units=km&query=${query}`,
+            url: `https://tripadvisor1.p.rapidapi.com/locations/search?location_id=1&limit=3&sort=relevance&offset=0&lang=en_US&currency=USD&units=km&query=${query}`,
             method: "GET",
             headers: {
             "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
@@ -95,7 +101,7 @@ window.onload = function(){
                 $.ajax({
                     async: true,
                     crossDomain: true,
-                    url: `https://tripadvisor1.p.rapidapi.com/hotels/list?offset=0&currency=INR&limit=10&order=asc&lang=en_US&sort=recommended&location_id=${loc_id}&adults=${nop}&checkin=${checkin}&checkout=${checkout}&rooms=${nor}&nights=2`,
+                    url: `https://tripadvisor1.p.rapidapi.com/hotels/list?offset=0&currency=INR&limit=30&order=asc&lang=en_US&sort=recommended&location_id=${loc_id}&adults=${nop}&checkin=${checkin}&checkout=${checkout}&rooms=${nor}&nights=2`,
                     method: "GET",
                     headers: {
                     "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
@@ -126,7 +132,7 @@ window.onload = function(){
                         newp.innerText = Data.data[i].name;
                         
                         
-                        if(Data.data[i].photo){
+                        if(Data.data[i].photo.images.small.url){
                             newimg.setAttribute('src',Data.data[i].photo.images.small.url);
                             newimg.setAttribute('width',Data.data[i].photo.images.small.width);
                             newimg.setAttribute('height',Data.data[i].photo.images.small.height);
@@ -136,8 +142,9 @@ window.onload = function(){
                             newimg.setAttribute('width','150px');
                             newimg.setAttribute('height','150px');
                         }
-
+                        document.querySelector('.slideshow').setAttribute('style','display:none;');
                         document.querySelector('#main').appendChild(newdiv);
+                        document.querySelector('#main').classList.add('main-class');
                         newdiv.appendChild(newspan);
                         newspan.appendChild(newimg);
                         newdiv.appendChild(newspanone);
@@ -145,12 +152,17 @@ window.onload = function(){
                         newspanone.appendChild(newpone);
                         newspanone.appendChild(newptwo);
                         }
+                    },
+
+                    error : function(responseText){
+                        alert("Retry!");
                     }
+
                 });
             },
 
-            error : function(textStaus){
-                alert(textStaus + " Retry!");
+            error : function(responseText){
+                alert("Retry!");
             }
         });
     });
@@ -186,7 +198,7 @@ window.onload = function(){
         $.ajax({
             async: true,
             crossDomain: true,
-            url: `https://tripadvisor1.p.rapidapi.com/locations/search?location_id=1&limit=30&sort=relevance&offset=0&lang=en_US&currency=USD&units=km&query=${query}`,
+            url: `https://tripadvisor1.p.rapidapi.com/locations/search?location_id=1&limit=3&sort=relevance&offset=0&lang=en_US&currency=USD&units=km&query=${query}`,
             method: "GET",
             headers: {
             "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
@@ -200,7 +212,7 @@ window.onload = function(){
                 $.ajax({
                     async: true,
                     crossDomain: true,
-                    url: `https://tripadvisor1.p.rapidapi.com/attractions/list-by-latlng?lunit=km&currency=INR&limit=10&distance=5&lang=en_US&longitude=${lon}&latitude=${lat}`,
+                    url: `https://tripadvisor1.p.rapidapi.com/attractions/list-by-latlng?lunit=km&currency=INR&limit=30&distance=5&lang=en_US&longitude=${lon}&latitude=${lat}`,
                     method: "GET",
                     headers: {
                     "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
@@ -248,6 +260,7 @@ window.onload = function(){
                                 newimg.setAttribute('height','150px');
                             }
                             if(Data.data[i].name != null){
+                            document.querySelector('.slideshow').setAttribute('style','display:none;');
                             document.querySelector('#main').appendChild(newdiv);
                             newdiv.appendChild(newspan);
                             newspan.appendChild(newimg);
@@ -256,8 +269,14 @@ window.onload = function(){
                             newspanone.appendChild(newpone);
                             newspanone.appendChild(newptwo);}
                             }
+                    },
+                    error : function(textStaus){
+                        alert("Retry!");
                     }
                 });
+            },
+            error : function(textStaus){
+                alert("Retry!");
             }
         });
     });
@@ -308,7 +327,7 @@ window.onload = function(){
                 $.ajax({
                     async: true,
                     crossDomain: true,
-                    url: `https://tripadvisor1.p.rapidapi.com/restaurants/list-by-latlng?limit=10&currency=INR&distance=2&lunit=km&lang=en_US&latitude=${lat}&longitude=${lon}`,
+                    url: `https://tripadvisor1.p.rapidapi.com/restaurants/list-by-latlng?limit=30&currency=INR&distance=2&lunit=km&lang=en_US&latitude=${lat}&longitude=${lon}`,
                     method: "GET",
                     headers: {
                     "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
@@ -349,6 +368,7 @@ window.onload = function(){
                                 newimg.setAttribute('height','150px');
                             }
                             if(Data.data[i].name != null){
+                            document.querySelector('.slideshow').setAttribute('style','display:none;');
                             document.querySelector('#main').appendChild(newdiv);
                             newdiv.appendChild(newspan);
                             newspan.appendChild(newimg);
@@ -356,8 +376,14 @@ window.onload = function(){
                             newspanone.appendChild(newp);
                             newspanone.appendChild(newpone);}
                             }
+                    },
+                    error : function(textStaus){
+                        alert("Retry!");
                     }
                 });
+            },
+            error : function(textStaus){
+                alert("Retry!");
             }
         });
     });
